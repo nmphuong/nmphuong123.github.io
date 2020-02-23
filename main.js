@@ -1,5 +1,4 @@
 const socket = io('https://webrtcv1demo.herokuapp.com/');
-
 $('#divChat').hide();
 socket.on('List_Online', arrUserInfo => {
 
@@ -36,7 +35,7 @@ function playStream(idVideoTag, stream){
 const peer = new Peer({key: 'peerjs', host: 'mypeer33.herokuapp.com', secure: true, port: 443});
 
 peer.on('open', id => {
-        $('#my-peer').append(id)
+        //$('#my-peer').append(id)
         $('#btnSignUp').click(() => {
                 const username = $('#txtUsername').val();
                 socket.emit('User_Register',{ ten: username, peerId: id});
