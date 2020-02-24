@@ -54,11 +54,11 @@ $('#btnCall').click(() => {
                         call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
                 });
 });
-var count = 1;
 
+var offer = 1;
 $('#ulUser').on('click', 'button', function () {
         const id = $(this).attr('id');
-        if (count == 1) {
+        if (offer == 1) {
                 openStream()
                         .then(stream => {
                                 playStream('localStream', stream);
@@ -72,7 +72,7 @@ $('#ulUser').on('click', 'button', function () {
                                 call.on('stream', remoteStream => playStream('remoteStream2', remoteStream));
                         });
         }
-        count = 2;
+        offer = 2;
 });
 var answer = 1;
 //Remote
@@ -92,4 +92,5 @@ peer.on('call', call => {
                         call.on('stream', remoteStream => playStream('remoteStream2', remoteStream));
                 });
         }
+        answer = 2;
 });
