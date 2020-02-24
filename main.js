@@ -56,6 +56,7 @@ $('#btnCall').click(() => {
 });
 
 var offer = 1;
+var id1;
 $('#ulUser').on('click', 'button', function () {
         const id = $(this).attr('id');
         if (offer == 1) {
@@ -69,10 +70,13 @@ $('#ulUser').on('click', 'button', function () {
                 openStream()
                         .then(stream => {
                                 const call = peer.call(id, stream);
+                                const call1 = peer.call(id1, stream);
+                                call1.on('stream', remoteStream => playStream('remoteStream1', remoteStream));
                                 call.on('stream', remoteStream => playStream('remoteStream2', remoteStream));
                         });
         }
         offer = 2;
+        id1 = id;
 });
 var answer = 1;
 //Remote
