@@ -59,7 +59,9 @@ peer.on('call', call => {
         .then(stream => {
                 call.answer(stream);
                 playStream('localStream', stream);
-                call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
+                call.on('stream', remoteStream => playStream('remoteStream1', remoteStream));
+                call.on('stream', remoteStream => playStream('remoteStream2', remoteStream));
+                call.on('stream', remoteStream => playStream('remoteStream3', remoteStream));
         })
 })
 
@@ -69,6 +71,8 @@ $('#ulUser').on('click', 'button', function(){
         .then(stream =>  {
                 playStream('localStream', stream);
                 const call = peer.call(id, stream);
-                call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
+                call.on('stream', remoteStream => playStream('remoteStream1', remoteStream));
+                call.on('stream', remoteStream => playStream('remoteStream2', remoteStream));
+                call.on('stream', remoteStream => playStream('remoteStream3', remoteStream));
         });
 });
