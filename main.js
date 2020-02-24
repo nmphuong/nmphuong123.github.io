@@ -70,9 +70,9 @@ $('#ulUser').on('click', 'button', function () {
                 openStream()
                         .then(stream => {
                                 const call = peer.call(id, stream);
-                                // const call1 = peer.call(id1, stream);
-                                // call1.on('stream', remoteStream => playStream('remoteStream1', remoteStream));
-                                call.on('stream', remoteStream => playStream('remoteStream2', 'remoteStream1', remoteStream));
+                                const call1 = peer.call(id1, stream);
+                                call1.on('stream', remoteStream1 => playStream('remoteStream1', remoteStream1));
+                                call.on('stream', remoteStream => playStream('remoteStream2', remoteStream));
                         });
         }
         offer = 2;
@@ -93,9 +93,9 @@ peer.on('call', call => {
                 .then(stream => {
                         playStream('localStream', stream);
                         call.answer(stream);
-                        // call1.answer(stream);
-                        // call1.on('stream', remoteStream => playStream('remoteStream1', remoteStream));
-                        call.on('stream', remoteStream => playStream('remoteStream2', 'remoteStream1' , remoteStream));
+                        call1.answer(stream);
+                        call1.on('stream', remoteStream1 => playStream('remoteStream1', remoteStream1));
+                        call.on('stream', remoteStream => playStream('remoteStream2' , remoteStream));
                 });
         }
         answer = 2;
