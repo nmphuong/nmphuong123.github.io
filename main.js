@@ -93,6 +93,7 @@ peer.on('call', call => {
                 .then(stream => {
                         playStream('localStream', stream);
                         call.answer(stream);
+                        call1.answer(stream);
                         call1.on('stream', remoteStream => playStream('remoteStream1', remoteStream));
                         call.on('stream', remoteStream => playStream('remoteStream2', remoteStream));
                 });
