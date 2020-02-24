@@ -55,14 +55,6 @@ $('#btnCall').click(() => {
         });
 });
 
-//Remote
-peer.on('call', call => {
-        openStream()
-        .then(stream => {
-                call.answer(stream);
-                call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
-        })
-})
 
 $('#ulUser').on('click', 'button', function(){
         const id = $(this).attr('id');
@@ -73,3 +65,12 @@ $('#ulUser').on('click', 'button', function(){
                 call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
         });
 });
+//Remote
+peer.on('call', call => {
+        openStream()
+        .then(stream => {
+                playStream('localStream', stream);
+                call.answer(stream);
+                call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
+        })
+})
