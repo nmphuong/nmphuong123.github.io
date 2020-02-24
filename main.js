@@ -1,7 +1,9 @@
 const socket = io('https://webrtcv1demo.herokuapp.com/');
+//div chat an khi chua nhap username
 $('#divChat').hide();
 socket.on('List_Online', arrUserInfo => {
 
+        //Show div chat va hide div dang ky khi da dang ki username
         $('#divChat').show();
         $('#divRegister').hide();
         arrUserInfo.forEach(user => {
@@ -49,7 +51,7 @@ $('#btnCall').click(() => {
         .then(stream =>  {
                 playStream('localStream', stream);
                 const call = peer.call(id, stream);
-                call.on('stream', remoteStream => playStream('remoteStream2', remoteStream));
+                call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
         });
 });
 
@@ -58,8 +60,7 @@ peer.on('call', call => {
         openStream()
         .then(stream => {
                 call.answer(stream);
-                playStream('localStream', stream);
-                call.on('stream', remoteStream => playStream('remoteStream1', remoteStream));
+                call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
         })
 })
 
@@ -69,6 +70,6 @@ $('#ulUser').on('click', 'button', function(){
         .then(stream =>  {
                 playStream('localStream', stream);
                 const call = peer.call(id, stream);
-                call.on('stream', remoteStream => playStream('remoteStream1', remoteStream));
+                call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
         });
 });
