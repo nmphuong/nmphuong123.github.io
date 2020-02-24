@@ -7,11 +7,11 @@ socket.on('List_Online', arrUserInfo => {
         $('#divChat').show();
         $('#divRegister').hide();
         arrUserInfo.forEach(user => {
-                const{ten, peerId} = user;
+                const { ten, peerId } = user;
                 $('#ulUser').append(`<button type="button" id="${peerId}">${ten}</button>`);
         });
         socket.on('have_a_register', user => {
-                const{ten, peerId} = user;
+                const { ten, peerId } = user;
                 $('#ulUser').append(`<button type="button" id="${peerId}">${ten}</button>`);
         });
         socket.on('user_disconnect', peerId => {
@@ -21,12 +21,12 @@ socket.on('List_Online', arrUserInfo => {
 
 socket.on('register_fail', () => alert('Please choose another username!'));
 
-function openStream(){
-        const config = {audio: true, video: true};
+function openStream() {
+        const config = { audio: true, video: true };
         return navigator.mediaDevices.getUserMedia(config);
 }
 
-function playStream(idVideoTag, stream){
+function playStream(idVideoTag, stream) {
         const video = document.getElementById(idVideoTag);
         video.srcObject = stream;
         video.play();
@@ -34,13 +34,13 @@ function playStream(idVideoTag, stream){
 // openStream()
 // .then(stream => playStream('localStream', stream));
 
-const peer = new Peer({key: 'peerjs', host: 'mypeer33.herokuapp.com', secure: true, port: 443});
+const peer = new Peer({ key: 'peerjs', host: 'mypeer33.herokuapp.com', secure: true, port: 443 });
 
 peer.on('open', id => {
         //$('#my-peer').append(id)
         $('#btnSignUp').click(() => {
                 const username = $('#txtUsername').val();
-                socket.emit('User_Register',{ ten: username, peerId: id});
+                socket.emit('User_Register', { ten: username, peerId: id });
         });
 });
 
@@ -48,29 +48,48 @@ peer.on('open', id => {
 $('#btnCall').click(() => {
         const id = $('#remoteId').val();
         openStream()
-        .then(stream =>  {
-                playStream('localStream', stream);
-                const call = peer.call(id, stream);
-                call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
-        });
+                .then(stream => {
+                        playStream('localStream', stream);
+                        const call = peer.call(id, stream);
+                        call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
+                });
 });
+var count = 1;
 
-
-$('#ulUser').on('click', 'button', function(){
+$('#ulUser').on('click', 'button', function () {
         const id = $(this).attr('id');
-        openStream()
-        .then(stream =>  {
-                playStream('localStream', stream);
-                const call = peer.call(id, stream);
-                call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
-        });
+        if (count == 1) {
+                openStream()
+                        .then(stream => {
+                                playStream('localStream', stream);
+                                const call = peer.call(id, stream);
+                                call.on('stream', remoteStream => playStream('remoteStream1', remoteStream));
+                        });
+        } else {
+                openStream()
+                        .then(stream => {
+                                const call = peer.call(id, stream);
+                                call.on('stream', remoteStream => playStream('remoteStream2', remoteStream));
+                        });
+        }
+        count = 2;
 });
+var answer = 1;
 //Remote
 peer.on('call', call => {
-        openStream()
-        .then(stream => {
-                playStream('localStream', stream);
-                call.answer(stream);
-                call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
-        })
-})
+        if(answer == 1){
+                openStream()
+                .then(stream => {
+                        playStream('localStream', stream);
+                        call.answer(stream);
+                        call.on('stream', remoteStream => playStream('remoteStream1', remoteStream));
+                });
+        } else {
+                openStream()
+                .then(stream => {
+                        playStream('localStream', stream);
+                        call.answer(stream);
+                        call.on('stream', remoteStream => playStream('remoteStream2', remoteStream));
+                });
+        }
+});
