@@ -55,48 +55,48 @@ $('#btnCall').click(() => {
                 });
 });
 
-var offer = 1;
-var id1;
+//var offer = 1;
+//var id1;
 $('#ulUser').on('click', 'button', function () {
         const id = $(this).attr('id');
-        if (offer == 1) {
+        //if (offer == 1) {
                 openStream()
                         .then(stream => {
                                 playStream('localStream', stream);
                                 const call = peer.call(id, stream);
                                 call.on('stream', remoteStream => playStream('remoteStream1', remoteStream));
                         });
-        } else {
-                openStream()
-                        .then(stream => {
-                                const call = peer.call(id, stream);
-                                const call1 = peer.call(id1, stream);
-                                call1.on('stream', remoteStream1 => playStream('remoteStream1', remoteStream1));
-                                call.on('stream', remoteStream => playStream('remoteStream2', remoteStream));
-                        });
-        }
-        offer = 2;
-        id1 = id;
+        //} else {
+        //         openStream()
+        //                 .then(stream => {
+        //                         const call = peer.call(id, stream);
+        //                         const call1 = peer.call(id1, stream);
+        //                         call1.on('stream', remoteStream1 => playStream('remoteStream1', remoteStream1));
+        //                         call.on('stream', remoteStream => playStream('remoteStream2', remoteStream));
+        //                 });
+        // }
+        // offer = 2;
+        // id1 = id;
 });
-var answer = 1;
+//var answer = 1;
 //Remote
 peer.on('call', call => {
-        if(answer == 1){
+        //if(answer == 1){
                 openStream()
                 .then(stream => {
                         playStream('localStream', stream);
                         call.answer(stream);
                         call.on('stream', remoteStream => playStream('remoteStream1', remoteStream));
                 });
-        } else {
-                openStream()
-                .then(stream => {
-                        playStream('localStream', stream);
-                        call.answer(stream);
-                        call1.answer(stream);
-                        call1.on('stream', remoteStream1 => playStream('remoteStream1', remoteStream1));
-                        call.on('stream', remoteStream => playStream('remoteStream2' , remoteStream));
-                });
-        }
-        answer = 2;
+        // } else {
+        //         openStream()
+        //         .then(stream => {
+        //                 playStream('localStream', stream);
+        //                 call.answer(stream);
+        //                 call1.answer(stream);
+        //                 call1.on('stream', remoteStream1 => playStream('remoteStream1', remoteStream1));
+        //                 call.on('stream', remoteStream => playStream('remoteStream2' , remoteStream));
+        //         });
+        // }
+        // answer = 2;
 });
