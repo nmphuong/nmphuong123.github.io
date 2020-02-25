@@ -22,7 +22,7 @@ socket.on('List_Online', arrUserInfo => {
 socket.on('register_fail', () => alert('Please choose another username!'));
 
 function openStream() {
-        const config = { audio: false, video: true };
+        const config = { audio: true, video: true };
         return navigator.mediaDevices.getUserMedia(config);
 }
 
@@ -56,7 +56,7 @@ $('#btnCall').click(() => {
 });
 
 var offer = 1;
-const id1;
+var id1;
 $('#ulUser').on('click', 'button', function () {
         const id = $(this).attr('id');
         if (offer == 1) {
@@ -69,9 +69,8 @@ $('#ulUser').on('click', 'button', function () {
         } else {
                 openStream()
                         .then(stream => {
-                                playStream('localStream', stream);
-                                const call1 = peer.call(id1, stream);
                                 const call = peer.call(id, stream);
+                                const call1 = peer.call(id1, stream);
                                 call1.on('stream', remoteStream1 => playStream('remoteStream1', remoteStream1));
                                 call.on('stream', remoteStream => playStream('remoteStream2', remoteStream));
                         });
