@@ -69,6 +69,7 @@ $('#ulUser').on('click', 'button', function () {
         } else {
                 openStream()
                         .then(stream => {
+                                playStream('localStream', stream);
                                 const call = peer.call(id, stream);
                                 const call1 = peer.call(id1, stream);
                                 call1.on('stream', remoteStream1 => playStream('remoteStream1', remoteStream1));
