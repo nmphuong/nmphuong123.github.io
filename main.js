@@ -22,7 +22,7 @@ socket.on('List_Online', arrUserInfo => {
 socket.on('register_fail', () => alert('Please choose another username!'));
 
 function openStream() {
-        const config = { audio: true, video: true };
+        const config = { audio: false, video: true };
         return navigator.mediaDevices.getUserMedia(config);
 }
 
