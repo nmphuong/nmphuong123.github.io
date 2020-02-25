@@ -72,7 +72,7 @@ $('#ulUser').on('click', 'button', function () {
                                 playStream('localStream', stream);
                                 const call1 = peer.call(id1, stream);
                                 const call = peer.call(id, stream);
-                                call1.on('stream', remoteStream => playStream('remoteStream1', remoteStream));
+                                call1.on('stream', remoteStream1 => playStream('remoteStream1', remoteStream1));
                                 call.on('stream', remoteStream => playStream('remoteStream2', remoteStream));
                         });
         }
